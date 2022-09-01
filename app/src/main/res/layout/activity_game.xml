@@ -59,9 +59,9 @@
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline16"
+        app:layout_constraintEnd_toStartOf="@id/btnFifth"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toBottomOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@id/btnFifth" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline15" />
 
     <ImageButton
         android:id="@+id/btnFifth"
@@ -80,8 +80,8 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toBottomOf="@+id/guideline15"
-        app:layout_constraintStart_toEndOf="@id/btnFifth" />
+        app:layout_constraintStart_toEndOf="@id/btnFifth"
+        app:layout_constraintTop_toBottomOf="@+id/guideline15" />
 
     <ImageButton
         android:id="@+id/btnSeventh"
@@ -90,8 +90,8 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toStartOf="@+id/btnEighth"
-        app:layout_constraintTop_toBottomOf="@+id/guideline16"
-        app:layout_constraintStart_toEndOf="@id/guideline11" />
+        app:layout_constraintStart_toEndOf="@id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/guideline16" />
 
     <ImageButton
         android:id="@+id/btnEighth"
@@ -100,18 +100,18 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toStartOf="@+id/btnNinth"
-        app:layout_constraintTop_toBottomOf="@+id/guideline16"
-        app:layout_constraintStart_toEndOf="@id/btnSeventh" />
+        app:layout_constraintStart_toEndOf="@id/btnSeventh"
+        app:layout_constraintTop_toBottomOf="@+id/guideline16" />
 
     <ImageButton
         android:id="@+id/btnNinth"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toEndOf="@id/btnEighth"
+        app:layout_constraintBottom_toTopOf="@id/guideline14"
         app:layout_constraintEnd_toStartOf="@id/guideline12"
-        app:layout_constraintTop_toBottomOf="@id/guideline16"
-        app:layout_constraintBottom_toTopOf="@id/guideline14" />
+        app:layout_constraintStart_toEndOf="@id/btnEighth"
+        app:layout_constraintTop_toBottomOf="@id/guideline16" />
 
 
     <ImageButton
@@ -119,15 +119,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/holo_orange_light"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_restart"
-        android:backgroundTint="@android:color/holo_orange_light"
-        app:tint="@color/white"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/guideline17"
         app:layout_constraintEnd_toStartOf="@+id/btnNinth"
         app:layout_constraintStart_toEndOf="@+id/btnSeventh"
         app:layout_constraintTop_toBottomOf="@+id/btnEighth"
-        app:layout_constraintBottom_toTopOf="@id/guideline17"/>
+        app:tint="@color/white" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"

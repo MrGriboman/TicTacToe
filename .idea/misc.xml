@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/kerti/AndroidStudioProjects/TicTacToe/app/src/main/res/drawable/ic_circle.xml" value="0.2445" />
+        <entry key="..\:/Users/kerti/AndroidStudioProjects/TicTacToe/app/src/main/res/drawable/ic_cross.xml" value="0.2445" />
         <entry key="..\:/Users/kerti/AndroidStudioProjects/TicTacToe/app/src/main/res/layout/activity_game.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/kerti/AndroidStudioProjects/TicTacToe/app/src/main/res/layout/activity_main.xml" value="0.35520833333333335" />
       </map>

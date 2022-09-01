@@ -1,10 +1,15 @@
 package com.example.tictactoe
 
+import android.graphics.Color.red
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.example.tictactoe.Constants.CROSS
 import com.example.tictactoe.Constants.CIRCLE
 import com.example.tictactoe.Constants.MODE
@@ -41,22 +46,28 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if (!gameEnded) {
-            val btn = v as ImageButton
-            val figureToSet = if (currentFigure == CROSS) R.drawable.ic_cross else R.drawable.ic_circle
-            btn.setImageResource(figureToSet)
-            changeButtonState(btn)
-            currentFigure = if (currentFigure == CROSS) CIRCLE else CROSS
-            turn = if (turn == 1) 2 else 1
-            binding.tvTurn.text = getString(R.string.turn, turn)
-            if (isWin() || isDraw()) {
-                gameEnded = true
-                binding.tvTurn.text =
-                    if (isWin()) getString(R.string.win, turn)
-                    else getString(R.string.draw)
-                binding.btnRestart.visibility = View.VISIBLE
-            }
+        val btn = v as ImageButton
+        if (btn.drawable != null || gameEnded)
+            return
+        val figureToSet = if (currentFigure == CROSS) R.drawable.ic_cross else R.drawable.ic_circle
+        btn.setImageResource(figureToSet)
+        btn.setColorFilter(
+            ContextCompat.getColor(this, if (currentFigure == CROSS) R.color.green else R.color.red),
+            PorterDuff.Mode.SRC_IN)
+        changeButtonState(btn)
+        currentFigure = if (currentFigure == CROSS) CIRCLE else CROSS
+
+        if (isWin() || isDraw()) {
+            gameEnded = true
+            binding.tvTurn.text =
+                if (isWin()) getString(R.string.win, turn)
+                else getString(R.string.draw)
+            binding.btnRestart.visibility = View.VISIBLE
+            return
         }
+
+        turn = if (turn == 1) 2 else 1
+        binding.tvTurn.text = getString(R.string.turn, turn)
     }
 
     private fun changeButtonState(btn: ImageButton) {
