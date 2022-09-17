@@ -4,4 +4,7 @@
     <string name="turn">Player %1$d turn</string>
     <string name="win">Player %1$d wins!</string>
     <string name="draw">It\'s a draw!</string>
+    <string name="single_player">Try to defeat me!</string>
+    <string name="bot_beaten">You Win!</string>
+    <string name="bot_wins">Bot Wins!</string>
 </resources>

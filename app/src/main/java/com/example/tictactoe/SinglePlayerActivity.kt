@@ -1,43 +1,44 @@
 package com.example.tictactoe
 
-import android.graphics.Color.red
 import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
+import com.example.tictactoe.databinding.ActivitySinglePlayerBinding
 import com.example.tictactoe.Constants.CROSS
 import com.example.tictactoe.Constants.CIRCLE
-import com.example.tictactoe.Constants.MODE
-import com.example.tictactoe.databinding.ActivityGameBinding
 
-class GameActivity : AppCompatActivity(), View.OnClickListener {
-    lateinit var binding: ActivityGameBinding
+class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
+    lateinit var binding: ActivitySinglePlayerBinding
     private var btns: MutableList<Int> = MutableList(9) {0}
+    private lateinit var btnsViews: MutableList<ImageButton>
     private var turn = 1
     private var currentFigure = CROSS
     private var gameEnded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGameBinding.inflate(layoutInflater)
+        binding = ActivitySinglePlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.apply {
+            btnsViews = mutableListOf(btnFirst, btnSecond, btnThird, btnForth, btnFifth, btnSixth,
+            btnSeventh, btnEighth, btnNinth)
+
             tvTurn.text = getString(R.string.turn, turn)
-            btnFirst.setOnClickListener(this@GameActivity)
-            btnSecond.setOnClickListener(this@GameActivity)
-            btnThird.setOnClickListener(this@GameActivity)
-            btnForth.setOnClickListener(this@GameActivity)
-            btnFifth.setOnClickListener(this@GameActivity)
-            btnSixth.setOnClickListener(this@GameActivity)
-            btnSeventh.setOnClickListener(this@GameActivity)
-            btnEighth.setOnClickListener(this@GameActivity)
-            btnNinth.setOnClickListener(this@GameActivity)
+            btnFirst.setOnClickListener(this@SinglePlayerActivity)
+            btnSecond.setOnClickListener(this@SinglePlayerActivity)
+            btnThird.setOnClickListener(this@SinglePlayerActivity)
+            btnForth.setOnClickListener(this@SinglePlayerActivity)
+            btnFifth.setOnClickListener(this@SinglePlayerActivity)
+            btnSixth.setOnClickListener(this@SinglePlayerActivity)
+            btnSeventh.setOnClickListener(this@SinglePlayerActivity)
+            btnEighth.setOnClickListener(this@SinglePlayerActivity)
+            btnNinth.setOnClickListener(this@SinglePlayerActivity)
 
             btnRestart.setOnClickListener {
                 recreate()
@@ -49,25 +50,29 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         val btn = v as ImageButton
         if (btn.drawable != null || gameEnded)
             return
-        val figureToSet = if (currentFigure == CROSS) R.drawable.ic_cross else R.drawable.ic_circle
-        btn.setImageResource(figureToSet)
+        btn.setImageResource(R.drawable.ic_cross)
         btn.setColorFilter(
-            ContextCompat.getColor(this, if (currentFigure == CROSS) R.color.green else R.color.red),
+            ContextCompat.getColor(this, R.color.green),
             PorterDuff.Mode.SRC_IN)
         changeButtonState(btn)
-        currentFigure = if (currentFigure == CROSS) CIRCLE else CROSS
 
         if (isWin() || isDraw()) {
             gameEnded = true
             binding.tvTurn.text =
-                if (isWin()) getString(R.string.win, turn)
+                if (isWin()) getString(R.string.bot_beaten)
                 else getString(R.string.draw)
             binding.btnRestart.visibility = View.VISIBLE
             return
         }
-
-        turn = if (turn == 1) 2 else 1
-        binding.tvTurn.text = getString(R.string.turn, turn)
+        bot()
+        if (isWin() || isDraw()) {
+            gameEnded = true
+            binding.tvTurn.text =
+                if (isWin()) getString(R.string.bot_wins)
+                else getString(R.string.draw)
+            binding.btnRestart.visibility = View.VISIBLE
+            return
+        }
     }
 
     private fun changeButtonState(btn: ImageButton) {
@@ -108,5 +113,62 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         if (!isWin() && !btns.any { it == 0 })
             return true
         return false
+    }
+
+    private fun bot() {
+        for (i in btns.indices) {
+            if (btns[i] == 0) {
+                btns[i] = 2
+                if (isWin()) {
+                    botTurn(i)
+                    return
+                }
+                btns[i] = 0
+            }
+        }
+        for (i in btns.indices) {
+            if (btns[i] == 0) {
+                btns[i] = 1
+                if (isWin()) {
+                    botTurn(i)
+                    return
+                }
+                btns[i] = 0
+            }
+        }
+
+        if (btns[4] == 0) {
+            botTurn(4)
+            return
+        }
+
+        for (i in btns.indices) {
+            if (btns[i] == 0) {
+                botTurn(i)
+                return
+            }
+        }
+    }
+
+    private fun indexToBtn(index: Int): ImageButton? = when(index) {
+        0 -> binding.btnFirst
+        1 -> binding.btnSecond
+        2 -> binding.btnThird
+        3 -> binding.btnForth
+        4 -> binding.btnFifth
+        5 -> binding.btnSixth
+        6 -> binding.btnSeventh
+        7 -> binding.btnEighth
+        8 -> binding.btnNinth
+        else -> null
+    }
+
+    private fun botTurn(index: Int) {
+        val btnView = indexToBtn(index) as ImageButton
+        btnView.setImageResource(R.drawable.ic_circle)
+        btnView.setColorFilter(
+            ContextCompat.getColor(this, R.color.red),
+            PorterDuff.Mode.SRC_IN)
+        btns[index] = CIRCLE
     }
 }
