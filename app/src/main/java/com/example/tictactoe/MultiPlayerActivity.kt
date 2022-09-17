@@ -12,6 +12,7 @@ import com.example.tictactoe.databinding.ActivityMultiPlayerBinding
 
 class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var binding: ActivityMultiPlayerBinding
+    lateinit var btnsViews: MutableList<ImageButton>
     private var btns: MutableList<Int> = MutableList(9) {0}
     private var turn = 1
     private var currentFigure = CROSS
@@ -34,8 +35,11 @@ class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
             btnEighth.setOnClickListener(this@MultiPlayerActivity)
             btnNinth.setOnClickListener(this@MultiPlayerActivity)
 
+            btnsViews = mutableListOf(btnFirst, btnSecond, btnThird, btnForth, btnFifth, btnSixth,
+                btnSeventh, btnEighth, btnNinth)
+
             btnRestart.setOnClickListener {
-                recreate()
+                replay()
             }
         }
     }
@@ -103,5 +107,15 @@ class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
         if (!isWin() && !btns.any { it == 0 })
             return true
         return false
+    }
+
+    private fun replay() {
+        btns = MutableList(9) {0}
+        for (btn in btnsViews) {
+            btn.setImageResource(0)
+        }
+        binding.tvTurn.text = getString(R.string.turn, turn)
+        binding.btnRestart.visibility = View.GONE
+        gameEnded = false
     }
 }

@@ -3,6 +3,7 @@ package com.example.tictactoe
 import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.TextKeyListener.clear
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -29,7 +30,7 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
             btnsViews = mutableListOf(btnFirst, btnSecond, btnThird, btnForth, btnFifth, btnSixth,
             btnSeventh, btnEighth, btnNinth)
 
-            tvTurn.text = getString(R.string.turn, turn)
+            tvTurn.text = getString(R.string.single_player)
             btnFirst.setOnClickListener(this@SinglePlayerActivity)
             btnSecond.setOnClickListener(this@SinglePlayerActivity)
             btnThird.setOnClickListener(this@SinglePlayerActivity)
@@ -41,7 +42,7 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
             btnNinth.setOnClickListener(this@SinglePlayerActivity)
 
             btnRestart.setOnClickListener {
-                recreate()
+                replay()
             }
         }
     }
@@ -170,5 +171,15 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
             ContextCompat.getColor(this, R.color.red),
             PorterDuff.Mode.SRC_IN)
         btns[index] = CIRCLE
+    }
+
+    private fun replay() {
+        btns = MutableList(9) {0}
+        for (btn in btnsViews) {
+            btn.setImageResource(0)
+        }
+        binding.tvTurn.text = getString(R.string.single_player)
+        binding.btnRestart.visibility = View.GONE
+        gameEnded = false
     }
 }
