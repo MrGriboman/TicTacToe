@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TicTacToe</string>
+    <string name="tic_tac_toe">Крестики-нолики</string>
+    <string name="turn">Ход игрока %1$d</string>
+    <string name="win">Игрок %1$d побеждает!</string>
+    <string name="draw">Ничья!</string>
+    <string name="single_player">Тебе не победить!</string>
+    <string name="bot_beaten">Ты выиграл!</string>
+    <string name="bot_wins">Бот победил!</string>
+</resources>

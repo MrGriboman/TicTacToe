@@ -1,6 +1,7 @@
 package com.example.tictactoe
 
 import android.graphics.PorterDuff
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -115,7 +116,7 @@ class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
             btn.setImageResource(0)
         }
         binding.tvTurn.text = getString(R.string.turn, turn)
-        binding.btnRestart.visibility = View.GONE
+        binding.btnRestart.visibility = View.INVISIBLE
         gameEnded = false
     }
 }

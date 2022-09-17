@@ -1,6 +1,7 @@
 package com.example.tictactoe
 
 import android.graphics.PorterDuff
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.TextKeyListener.clear
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.example.tictactoe.databinding.ActivitySinglePlayerBinding
 import com.example.tictactoe.Constants.CROSS
 import com.example.tictactoe.Constants.CIRCLE
+import kotlinx.coroutines.delay
 
 class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var binding: ActivitySinglePlayerBinding
@@ -65,6 +67,8 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
             binding.btnRestart.visibility = View.VISIBLE
             return
         }
+
+        Thread.sleep(100)
         bot()
         if (isWin() || isDraw()) {
             gameEnded = true
@@ -179,7 +183,7 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
             btn.setImageResource(0)
         }
         binding.tvTurn.text = getString(R.string.single_player)
-        binding.btnRestart.visibility = View.GONE
+        binding.btnRestart.visibility = View.INVISIBLE
         gameEnded = false
     }
 }
