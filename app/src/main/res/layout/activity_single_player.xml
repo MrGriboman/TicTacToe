@@ -102,7 +102,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintBottom_toTopOf="@+id/glRestartTop"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/btnEighth"
         app:layout_constraintHorizontal_bias="0.5"
@@ -114,7 +114,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintBottom_toTopOf="@+id/glRestartTop"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/btnNinth"
         app:layout_constraintHorizontal_bias="0.5"
@@ -126,7 +126,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintBottom_toTopOf="@+id/glRestartTop"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -143,25 +143,134 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_restart"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
+        app:layout_constraintBottom_toTopOf="@+id/glRestartBottom"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/btnNinth"
         app:layout_constraintStart_toEndOf="@+id/btnSeventh"
-        app:layout_constraintTop_toTopOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/glRestartTop"
         app:tint="@color/white" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline14"
+        android:id="@+id/glRestartTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline17"
+        android:id="@+id/glRestartBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRedLineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRedLineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.74" />
+
+    <View
+        android:id="@+id/firstVerticalLine"
+        android:layout_width="5dp"
+        android:layout_height="0dp"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/glRedLineBottom"
+        app:layout_constraintEnd_toEndOf="@id/btnForth"
+        app:layout_constraintStart_toStartOf="@id/btnForth"
+        app:layout_constraintTop_toTopOf="@+id/glRedLineTop" />
+
+    <View
+        android:id="@+id/secondVerticalLine"
+        android:layout_width="5dp"
+        android:layout_height="0dp"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/glRedLineBottom"
+        app:layout_constraintEnd_toEndOf="@id/btnFifth"
+        app:layout_constraintStart_toStartOf="@id/btnFifth"
+        app:layout_constraintTop_toTopOf="@+id/glRedLineTop" />
+
+    <View
+        android:id="@+id/thirdVerticalLine"
+        android:layout_width="5dp"
+        android:layout_height="0dp"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/glRedLineBottom"
+        app:layout_constraintEnd_toEndOf="@id/btnSixth"
+        app:layout_constraintStart_toStartOf="@id/btnSixth"
+        app:layout_constraintTop_toTopOf="@+id/glRedLineTop" />
+
+    <View
+        android:id="@+id/firstHorizontalLine"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/btnSecond"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnSecond" />
+
+    <View
+        android:id="@+id/secondHorizontalLine"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/btnFifth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnFifth" />
+
+    <View
+        android:id="@+id/thirdHorizontalLine"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/btnEighth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnEighth" />
+
+    <View
+        android:id="@+id/rightDiagonal"
+        android:layout_width="5dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:rotation="45"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/glRestartTop"
+        app:layout_constraintEnd_toEndOf="@id/btnFifth"
+        app:layout_constraintStart_toStartOf="@id/btnFifth"
+        app:layout_constraintTop_toTopOf="@+id/tvTurn" />
+
+    <View
+        android:id="@+id/leftDiagonal"
+        android:layout_width="5dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:rotation="-45"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/glRestartTop"
+        app:layout_constraintEnd_toEndOf="@id/btnFifth"
+        app:layout_constraintStart_toStartOf="@id/btnFifth"
+        app:layout_constraintTop_toTopOf="@+id/tvTurn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

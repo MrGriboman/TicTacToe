@@ -14,6 +14,7 @@ import com.example.tictactoe.databinding.ActivityMultiPlayerBinding
 class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var binding: ActivityMultiPlayerBinding
     lateinit var btnsViews: MutableList<ImageButton>
+    lateinit var redLinesViews: MutableList<View>
     private var btns: MutableList<Int> = MutableList(9) {0}
     private var turn = 1
     private var currentFigure = CROSS
@@ -38,6 +39,13 @@ class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
             btnsViews = mutableListOf(btnFirst, btnSecond, btnThird, btnForth, btnFifth, btnSixth,
                 btnSeventh, btnEighth, btnNinth)
+
+            redLinesViews = mutableListOf(
+                firstHorizontalLine, secondHorizontalLine,
+                thirdHorizontalLine, firstVerticalLine,
+                secondVerticalLine, thirdVerticalLine,
+                rightDiagonal, leftDiagonal
+            )
 
             btnRestart.setOnClickListener {
                 replay()
@@ -86,21 +94,21 @@ class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun isWin(): Boolean {
         if (btns[0] == btns[1] && btns[0] == btns[2] && btns[0] != 0)
-            return true
+            return true.also { binding.firstHorizontalLine.visibility = View.VISIBLE }
         if (btns[3] == btns[4] && btns[3] == btns[5] && btns[3] != 0)
-            return true
+            return true.also { binding.secondHorizontalLine.visibility = View.VISIBLE }
         if (btns[6] == btns[7] && btns[6] == btns[8] && btns[6] != 0)
-            return true
+            return true.also { binding.thirdHorizontalLine.visibility = View.VISIBLE }
         if (btns[0] == btns[3] && btns[0] == btns[6] && btns[0] != 0)
-            return true
+            return true.also { binding.firstVerticalLine.visibility = View.VISIBLE }
         if (btns[1] == btns[4] && btns[1] == btns[7] && btns[1] != 0)
-            return true
+            return true.also { binding.secondVerticalLine.visibility = View.VISIBLE }
         if (btns[2] == btns[5] && btns[2] == btns[8] && btns[2] != 0)
-            return true
+            return true.also { binding.thirdVerticalLine.visibility = View.VISIBLE }
         if (btns[0] == btns[4] && btns[0] == btns[8] && btns[0] != 0)
-            return true
+            return true.also { binding.leftDiagonal.visibility = View.VISIBLE }
         if (btns[2] == btns[4] && btns[2] == btns[6] && btns[2] != 0)
-            return true
+            return true.also { binding.rightDiagonal.visibility = View.VISIBLE }
         return false
     }
 
@@ -114,6 +122,9 @@ class MultiPlayerActivity : AppCompatActivity(), View.OnClickListener {
         btns = MutableList(9) {0}
         for (btn in btnsViews) {
             btn.setImageResource(0)
+        }
+        for (line in redLinesViews) {
+            line.visibility = View.INVISIBLE
         }
         binding.tvTurn.text = getString(R.string.turn, turn)
         binding.btnRestart.visibility = View.INVISIBLE

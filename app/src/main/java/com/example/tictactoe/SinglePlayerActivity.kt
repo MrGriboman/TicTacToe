@@ -17,8 +17,9 @@ import kotlinx.coroutines.delay
 
 class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var binding: ActivitySinglePlayerBinding
-    private var btns: MutableList<Int> = MutableList(9) {0}
+    private var btns: MutableList<Int> = MutableList(9) { 0 }
     private lateinit var btnsViews: MutableList<ImageButton>
+    private lateinit var redLinesViews: MutableList<View>
     private var turn = 1
     private var currentFigure = CROSS
     private var gameEnded = false
@@ -29,8 +30,16 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         binding.apply {
-            btnsViews = mutableListOf(btnFirst, btnSecond, btnThird, btnForth, btnFifth, btnSixth,
-            btnSeventh, btnEighth, btnNinth)
+            btnsViews = mutableListOf(
+                btnFirst, btnSecond, btnThird, btnForth, btnFifth, btnSixth,
+                btnSeventh, btnEighth, btnNinth
+            )
+            redLinesViews = mutableListOf(
+                firstHorizontalLine, secondHorizontalLine,
+                thirdHorizontalLine, firstVerticalLine,
+                secondVerticalLine, thirdVerticalLine,
+                rightDiagonal, leftDiagonal
+            )
 
             tvTurn.text = getString(R.string.single_player)
             btnFirst.setOnClickListener(this@SinglePlayerActivity)
@@ -56,7 +65,8 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
         btn.setImageResource(R.drawable.ic_cross)
         btn.setColorFilter(
             ContextCompat.getColor(this, R.color.green),
-            PorterDuff.Mode.SRC_IN)
+            PorterDuff.Mode.SRC_IN
+        )
         changeButtonState(btn)
 
         if (isWin() || isDraw()) {
@@ -67,9 +77,10 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
             binding.btnRestart.visibility = View.VISIBLE
             return
         }
-
+        Log.d("btns", btns.toString())
         Thread.sleep(100)
         bot()
+        Log.d("btns", btns.toString())
         if (isWin() || isDraw()) {
             gameEnded = true
             binding.tvTurn.text =
@@ -81,7 +92,7 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun changeButtonState(btn: ImageButton) {
-        when(btn.id) {
+        when (btn.id) {
             R.id.btnFirst -> btns[0] = if (currentFigure == CROSS) CROSS else CIRCLE
             R.id.btnSecond -> btns[1] = if (currentFigure == CROSS) CROSS else CIRCLE
             R.id.btnThird -> btns[2] = if (currentFigure == CROSS) CROSS else CIRCLE
@@ -95,6 +106,26 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun isWin(): Boolean {
+        if (btns[0] == btns[1] && btns[0] == btns[2] && btns[0] != 0)
+            return true.also { binding.firstHorizontalLine.visibility = View.VISIBLE }
+        if (btns[3] == btns[4] && btns[3] == btns[5] && btns[3] != 0)
+            return true.also { binding.secondHorizontalLine.visibility = View.VISIBLE }
+        if (btns[6] == btns[7] && btns[6] == btns[8] && btns[6] != 0)
+            return true.also { binding.thirdHorizontalLine.visibility = View.VISIBLE }
+        if (btns[0] == btns[3] && btns[0] == btns[6] && btns[0] != 0)
+            return true.also { binding.firstVerticalLine.visibility = View.VISIBLE }
+        if (btns[1] == btns[4] && btns[1] == btns[7] && btns[1] != 0)
+            return true.also { binding.secondVerticalLine.visibility = View.VISIBLE }
+        if (btns[2] == btns[5] && btns[2] == btns[8] && btns[2] != 0)
+            return true.also { binding.thirdVerticalLine.visibility = View.VISIBLE }
+        if (btns[0] == btns[4] && btns[0] == btns[8] && btns[0] != 0)
+            return true.also { binding.leftDiagonal.visibility = View.VISIBLE }
+        if (btns[2] == btns[4] && btns[2] == btns[6] && btns[2] != 0)
+            return true.also { binding.rightDiagonal.visibility = View.VISIBLE }
+        return false
+    }
+
+    private fun botWinCheck(): Boolean {
         if (btns[0] == btns[1] && btns[0] == btns[2] && btns[0] != 0)
             return true
         if (btns[3] == btns[4] && btns[3] == btns[5] && btns[3] != 0)
@@ -124,7 +155,7 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
         for (i in btns.indices) {
             if (btns[i] == 0) {
                 btns[i] = 2
-                if (isWin()) {
+                if (botWinCheck()) {
                     botTurn(i)
                     return
                 }
@@ -134,7 +165,7 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
         for (i in btns.indices) {
             if (btns[i] == 0) {
                 btns[i] = 1
-                if (isWin()) {
+                if (botWinCheck()) {
                     botTurn(i)
                     return
                 }
@@ -155,7 +186,7 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun indexToBtn(index: Int): ImageButton? = when(index) {
+    private fun indexToBtn(index: Int): ImageButton? = when (index) {
         0 -> binding.btnFirst
         1 -> binding.btnSecond
         2 -> binding.btnThird
@@ -173,14 +204,18 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
         btnView.setImageResource(R.drawable.ic_circle)
         btnView.setColorFilter(
             ContextCompat.getColor(this, R.color.red),
-            PorterDuff.Mode.SRC_IN)
+            PorterDuff.Mode.SRC_IN
+        )
         btns[index] = CIRCLE
     }
 
     private fun replay() {
-        btns = MutableList(9) {0}
+        btns = MutableList(9) { 0 }
         for (btn in btnsViews) {
             btn.setImageResource(0)
+        }
+        for (line in redLinesViews) {
+            line.visibility = View.INVISIBLE
         }
         binding.tvTurn.text = getString(R.string.single_player)
         binding.btnRestart.visibility = View.INVISIBLE
