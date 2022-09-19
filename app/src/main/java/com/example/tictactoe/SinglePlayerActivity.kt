@@ -23,11 +23,18 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
     private var turn = 1
     private var currentFigure = CROSS
     private var gameEnded = false
+    lateinit var mp: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySinglePlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mp = MediaPlayer.create(this, R.raw.turn_sound)
+        mp.setOnCompletionListener {
+            mp.reset()
+            mp.release()
+        }
 
         binding.apply {
             btnsViews = mutableListOf(
@@ -59,6 +66,8 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        mp = MediaPlayer.create(this, R.raw.turn_sound)
+        mp.start()
         val btn = v as ImageButton
         if (btn.drawable != null || gameEnded)
             return
@@ -80,7 +89,8 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
         Log.d("btns", btns.toString())
         Thread.sleep(100)
         bot()
-        Log.d("btns", btns.toString())
+        mp = MediaPlayer.create(this, R.raw.turn_sound)
+        mp.start()
         if (isWin() || isDraw()) {
             gameEnded = true
             binding.tvTurn.text =
@@ -210,6 +220,8 @@ class SinglePlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun replay() {
+        mp = MediaPlayer.create(this, R.raw.btn_sound)
+        mp.start()
         btns = MutableList(9) { 0 }
         for (btn in btnsViews) {
             btn.setImageResource(0)
